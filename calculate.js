@@ -46,16 +46,21 @@ const NUMBER_OF_REVIEWS = [
     }
 ]
 
+// Points based on user's rank
 const BRONZE = 1
 const SILVER = 2
 const GOLD = 3
 const PLATINUM = 5
 const DIAMOND = 10
-const ONE_FLAME = 250
-const TWO_FLAMES = 500
-const THREE_FLAMES = 1000
-const FOUR_FLAMES = 2000
-const FIVE_FLAMES = 4000
+
+// Points needed to reach flames for a place/POI/event
+const ONE_FLAME = 500
+const TWO_FLAMES = 1000
+const THREE_FLAMES = 2000
+const FOUR_FLAMES = 3500
+const FIVE_FLAMES = 7000
+
+// For the random run, the maximum amount of each variable
 const MAX_BRONZE = 250
 const MAX_SILVER = 250
 const MAX_GOLD = 150
@@ -87,6 +92,8 @@ class Flames {
     }
 
     getAverageGradePoints() {
+
+        // Get the amount of points from the average grade
     
         AVERAGE_GRADE_POINTS.map(item => {
             if (this.averageGrade >= item.grade) {
@@ -100,6 +107,9 @@ class Flames {
     }
 
     getReviewsAmountPoints() {
+
+        // Get the amount of points from the reviews
+
         NUMBER_OF_REVIEWS.map(item => {
             if (this.reviewsAmount >= item.number) {
                 this.state.var = item.points
@@ -113,6 +123,8 @@ class Flames {
 
     getPeoplePoints() {
 
+        // Get the amount of points from the users attending
+
         this.state.people += (this.people.bronze * BRONZE)
         this.state.people += (this.people.silver * SILVER)
         this.state.people += (this.people.gold * GOLD)
@@ -122,6 +134,8 @@ class Flames {
     }
 
     getFlames() {
+
+        // Translates the points to an amount of flames
 
         this.state.var = 0
 
@@ -158,11 +172,17 @@ class Flames {
     }
 
     getTotal() {
+
+        // Calculate the total amount of points
+
         this.state.total = this.state.averageGrade + this.state.reviewsAmount + this.state.people
         this.state['flames'] = this.getFlames()
     }
 
     outputResults() {
+
+        // Outputs the results
+
         console.log("Total amount of people: " + this.people.total)
         console.log("Bronze: " + this.people.bronze)
         console.log("Silver: " + this.people.silver)
@@ -174,6 +194,9 @@ class Flames {
     }
 
     startFunction() {
+
+        // Function that gets all the values and put them in the variables
+
         if (process.argv[2] === 'random') {
 
             this.people.bronze = Math.round(Math.random() * MAX_BRONZE)
